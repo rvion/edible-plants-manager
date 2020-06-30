@@ -3,6 +3,8 @@ import "./App.css"
 import { observer } from "mobx-react-lite"
 import { observable, action, autorun, computed, runInAction } from "mobx"
 
+import "mobx-react-lite/batchingForReactDom"
+
 type Vegetable = {
     id: string
     kind: "vegetable" | "fruit"
@@ -68,6 +70,12 @@ class St {
         })
     }
 }
+const emoji = (emoji: string) => (
+    <span role="img" aria-label="emoji">
+        {emoji}
+    </span>
+)
+
 const st = new St()
 const App = observer(() => {
     return (
@@ -78,40 +86,46 @@ const App = observer(() => {
                     <button onClick={() => st.addVegetable()}>ADD</button>
                     <button onClick={() => st.reset()}>RESET</button>
                     <div className="row">
-                        <div className="hidden">➖</div>
-                        <div className="hidden">🍆</div>
+                        <div className="hidden">{emoji("➖")}</div>
+                        <div className="hidden">{emoji("🍆")}</div>
                         <div className="pad"></div>
                         {allMonths.map((m) => (
-                            <div className="month-label">{m}</div>
+                            <div key={m} className="month-label">
+                                {m}
+                            </div>
                         ))}
                     </div>
+
                     {st.entries.map((entry, ix) => (
-                        <div className="vegetable row">
-                            {/* DELETE BTN */}
-                            <div
-                                className="clickable"
-                                onClick={() => st.entries.splice(ix, 1)}
-                            >
-                                ➖
-                            </div>
-                            <div
-                                className="clickable"
-                                onClick={() => {
-                                    entry.kind =
-                                        entry.kind === "fruit"
-                                            ? "vegetable"
-                                            : "fruit"
-                                }}
-                            >
-                                {entry.kind === "fruit" ? "🍑" : "🍆"}
-                            </div>
-                            {inputText(entry, "id")}
-                            {inputMonths(entry)}
-                        </div>
+                        <EntryUI entry={entry} ix={ix} key={ix} />
                     ))}
                 </div>
                 <PreviewUI />
             </div>
+        </div>
+    )
+})
+const EntryUI = observer(function EntryUI(props: {
+    entry: Vegetable
+    ix: number
+}) {
+    const { entry, ix } = props
+    return (
+        <div className="vegetable row">
+            {/* DELETE BTN */}
+            <div className="clickable" onClick={() => st.entries.splice(ix, 1)}>
+                {emoji("➖")}
+            </div>
+            <div
+                className="clickable"
+                onClick={() => {
+                    entry.kind = entry.kind === "fruit" ? "vegetable" : "fruit"
+                }}
+            >
+                {entry.kind === "fruit" ? emoji("🍑") : emoji("🍆")}
+            </div>
+            {inputText(entry, "id")}
+            {inputMonths(entry)}
         </div>
     )
 })
@@ -164,6 +178,7 @@ const inputMonths = (vegetable: Vegetable) => (
             const available = months.indexOf(index) >= 0
             return (
                 <div
+                    key={ix}
                     className="month-availability clickable"
                     onClick={(ev) => {
                         // if already available
@@ -171,17 +186,20 @@ const inputMonths = (vegetable: Vegetable) => (
                             vegetable.available_months = months.filter(
                                 (i) => i !== index
                             )
+                            return
                         }
                         // if already present, return
                         if (months.includes(index)) return
                         // othwerwise, add it
                         months.push(index)
                         // sort it
-                        vegetable.available_months = months.sort()
+                        vegetable.available_months = months
+                            .slice()
+                            .sort((x, y) => x - y)
                         return
                     }}
                 >
-                    {available ? "✅" : "❌"}
+                    {available ? emoji("✅") : emoji("❌")}
                 </div>
             )
         })}

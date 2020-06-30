@@ -20,13 +20,19 @@ button {margin: .3rem;padding: .3rem;}
 .month-availability { width: 1.4rem;}
 /* input[type='checkbox'] {width: 1rem;} */
 
+html, body { font-family: 'Coming Soon', cursive; }
 html { box-sizing: border-box; }
 *, *:before, *:after { box-sizing: inherit; }
 
-input {font-size: 1rem;}
+input,textarea {font-size: 1rem;}
 .pad, input[type='text'] {width: 5rem;}
 .App { margin: 2em; }
-pre {background-color: rgb(229, 240, 236);max-width: 500px;white-space: pre-wrap;}
+/* pre {
+    font-size: 1rem;
+    background-color: rgb(229, 240, 236);
+    max-width: 500px;
+    white-space: pre-wrap;
+} */
 
 .clickable {transition-duration: .1s;}
 .clickable:hover {transform: translateY(-0.2rem);}
