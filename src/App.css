@@ -1,38 +1,32 @@
-.App {
-  text-align: center;
-}
+.h100 {height: 100%;}
+.line {align-items: center; }
+.scroll {overflow: auto;}
+.rel { position: relative;}
+.abs { position: absolute; top: 0; bottom: 0; left: 0; right: 0}
+.absolute{position: absolute}
+.bord {border: 1px solid  var(--col-bord, black);}
+.basis1 {flex-basis: 0;}
+.grow {flex-grow: 1;}
+.clickable {cursor: pointer;}
+.noshrink {flex-shrink: 0;}
+.row{ display: flex; flex-direction: row}
+.col { display: flex; flex-direction: column}
+.pane { overflow: auto;}
+.hidden { visibility: hidden;}
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+button {margin: .3rem;padding: .3rem;}
+.month-label { transform: rotate(-50deg); }
+.month-label,
+.month-availability { width: 1.4rem;}
+/* input[type='checkbox'] {width: 1rem;} */
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
+html { box-sizing: border-box; }
+*, *:before, *:after { box-sizing: inherit; }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
+input {font-size: 1rem;}
+.pad, input[type='text'] {width: 5rem;}
+.App { margin: 2em; }
+pre {background-color: rgb(229, 240, 236);max-width: 500px;white-space: pre-wrap;}
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+.clickable {transition-duration: .1s;}
+.clickable:hover {transform: translateY(-0.2rem);}
