@@ -73,7 +73,7 @@ const App = observer(() => {
     return (
         <div className="App">
             <div className="row">
-                <div className="pane-editor bord grow basis1 noshrink">
+                <div className="pane-editor  grow basis1 noshrink">
                     <h1>Editor</h1>
                     <button onClick={() => st.addVegetable()}>ADD</button>
                     <button onClick={() => st.reset()}>RESET</button>
@@ -117,7 +117,7 @@ const App = observer(() => {
 })
 const PreviewUI = observer(function PreviewUI() {
     return (
-        <div className="pane-json bord grow basis1 noshrink col">
+        <div className="pane-json  grow basis1 noshrink col">
             <h1>JSON</h1>
             {inputCheckbox(st, "pretty")}
             <textarea
